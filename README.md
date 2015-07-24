@@ -10,6 +10,12 @@ By the end of this lesson you should be able to:
 - Write chained `then` promises
 - Use `Promise.all` to wait for an array of promises to resolve
 
+## Setup
+
+Make sure you have bower installed with `npm install bower -g`
+
+Then run `npm install` (which will in turn run `bower install` for you)
+
 ## Set the stage
 
 _Why_?:  Callbacks can become difficult to work with when you are making several asynchronous calls.  Promises are a common and _awesome_ way to help make asynchronous code easier to work with.
