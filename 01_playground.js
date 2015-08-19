@@ -2,6 +2,14 @@ var db = require('monk')('localhost/javascript-promises-examples')
 var users = db.get('users');
 var promise = users.remove({});
 
+// {name: "foo", age: 24}
+
+// name | "foo"
+// age  | 24
+
+// 0 | "foo"
+// 1  | 24
+
 // ******* WHAT IS THE 0? ({0: 1})
 promise.then(function(){
   console.log(arguments);
