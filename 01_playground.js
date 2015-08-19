@@ -14,7 +14,7 @@ users.insert({name: 'Harry'}).then(function(){
 promise.then(function(x){
   console.log(x);
 })
-//.remove() returns a writeresult OBJECT thatn contains status of operation
+//.remove() returns a writeresult OBJECT that contains status of operation
 // writeResults has information about the # of items removed! In this case 1 because only
 // one item was inserted!
 
@@ -30,11 +30,33 @@ users.insert({name: 'Harry'}).then(function () {
   })
 })
 // 1. A promise is an object. Calls on the method of 'then' which in turn returns an async call
-// 2. Then returns a promise. All promises are async calls but not all asycn calls are promises
-// 3. Promises are used for asynchronous calls or call back functions
+// 2. Then: returns a promise, stores the function passed to it
+// 3. All promises are async calls but not all asycn calls are promises
+// 4. Promises are used for asynchronous calls or call back functions
     // a. A callback function is a function that uses information obtained from a previous function nd passes it as the arguement.
           //pretty much a function passed to another function
     //b. An asynchronous callback is invoked after the function returns.
+
+
+
+// Promises Under the Hood! (this stuff is already built in! Don't ever have to do this)
+// NOW
+var Promise = function(fn){
+  this.callbacks = []
+}
+
+Promise.prototype.then = function(callback){
+  this.callbacks.push(callback)
+  return new Promise(...)
+}
+
+// LATER
+this.callbacks.forEach(function(callback){
+  callback.call(null, args)
+})
+
+
+
 
 
 // Promise function passes a success(onFulfill) and a failure(onReject)
