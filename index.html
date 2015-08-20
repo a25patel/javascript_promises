@@ -33,70 +33,70 @@
         })
       })
 
-      document.querySelector('[data-behavior=get-first]').addEventListener('click', function(e){
+      document.querySelector('[data-behavior=get-first]').addEventListener('click', function (e) {
         e.preventDefault()
-        var i = 0;
-        getUsers(i).then(function(user){
-          $.getJSON(user.bookmarks_path).then(function(bookmarks){
-            console.log("The user's username is: ", theUser.username);
-            console.log("The user's email is: ", user.email);
-            console.log("The user's bookmarks are: ", bookmarks);
-            document.querySelector('[data-container=first]').innerText = [
-              "The user with the username",
-              theUser.username,
-              "and the email",
-              user.email,
-              "has bookmarked",
-              bookmarks.join(", ")
-            ].join(" ")
-              })
+        getUsers('first').then(function (obj) {
+              logs(obj);
+              document.querySelector('[data-container=first]').innerText = [
+                "The user with the username",
+                obj.theUser.username,
+                "and the email",
+                obj.user.email,
+                "has bookmarked",
+                obj.bookmarks.join(", ")
+              ].join(" ")
             })
           })
 
-        var getUsers = function(i){
-         return $.getJSON('/data/users.json').then(function(users){
-            var theUser = users[i]
-            console.log('The first user is: ', theUser);
-            return theUser
-          }).then(function(theUser){
-              return $.getJSON('/data/users/' + theUser.username + '.json').then(function(user){
-              console.log('The full user data is: ', user);
-              return user
-          })
-        })
-      }
-
       document.querySelector('[data-behavior=get-last]').addEventListener('click', function (e) {
         e.preventDefault()
-        $.getJSON('/data/users.json').then(function(users){
-          var theUser = users[users.length - 1]
-          console.log('The user is: ', theUser);
-          return theUser;
-        }).then(function(theUser){
-          $.getJSON('/data/users/' + theUser.username + '.json').then(function(user){
-            console.log('The full user data is: ', user);
-            return user;
-        }).then(function(user){
-          $.getJSON(user.bookmarks_path).then(function(bookmarks){
-            console.log("The user's username is: ", theUser.username);
-            console.log("The user's email is: ", user.email);
-            console.log("The user's bookmarks are: ", bookmarks);
+        getUsers('last').then(function(obj){
+            logs(obj);
             var ul = document.querySelector('[data-container=last]')
             var li1 = document.createElement('li')
-            li1.innerText = 'Username: ' + theUser.username
+            li1.innerText = 'Username: ' + obj.theUser.username
             ul.appendChild(li1)
 
             var li2 = document.createElement('li')
-            li2.innerText = 'Email: ' + user.email
+            li2.innerText = 'Email: ' + obj.user.email
             ul.appendChild(li2)
 
             var li3 = document.createElement('li')
-            li3.innerText = 'Bookmarks: ' + bookmarks.join(", ")
+            li3.innerText = 'Bookmarks: ' + obj.bookmarks.join(", ")
             ul.appendChild(li3)
           })
         })
-      })
-    })
+
+
+      function logs(obj){
+        console.log("The user's username is: ", obj.theUser.username);
+        console.log("The user's email is: ", obj.user.email);
+        console.log("The user's bookmarks are: ", obj.bookmarks);
+      }
+
+      function getUsers(index) {
+        return $.getJSON('/data/users.json').then(function (users) {
+          var i;
+          if(index === 'first'){
+            i = 0;
+          }else if (index === 'last'){
+            i = users.length - 1;
+          }
+          var theUser = users[i]
+          console.log('The first user is: ', theUser);
+          return theUser
+        }).then(function(theUser){
+          return $.getJSON('/data/users/' + theUser.username + '.json').then(function (user) {
+            console.log('The full user data is: ', user);
+            return {user: user, theUser: theUser};
+          })
+        }).then(function(obj){
+            return $.getJSON(obj.user.bookmarks_path).then(function (bookmarks) {
+              obj.bookmarks = bookmarks
+              return obj
+            })
+        })
+      }
 
     </script>
   </body>
