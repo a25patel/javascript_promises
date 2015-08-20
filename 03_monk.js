@@ -13,7 +13,7 @@ messages.remove({}).then(function f1() {
   db.close()
 })
 
-// 
+//
 // 1. Run messages.remove - aka remove all items in the collection messages
 // 2. Once that is complete, remove all items in the users collection
 // 3. Once that is complete, insert 'Joe' into the users collection
@@ -27,9 +27,10 @@ messages.remove({}).then(function f1() {
 // .then(f1)
 // .then(f2)
 // .then(f3)
+// .then(f4)
 //
 // LATER:
 // f1 (wait until the remove happens, then call...)
 //   f2  (wait until the insert happens, then call...)
 //     f3  (wait until the insert happens, then call...)
-//       f4
+//       f4 (wait until the insert happens, then call...)
