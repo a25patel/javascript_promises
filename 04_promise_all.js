@@ -2,8 +2,14 @@ var db = require('monk')('localhost/javascript-promises-examples')
 
 var users = db.get('users')
 
-users.remove({}, function (err) {
-  users.insert({name: 'Joe'}, function (err, result) {
+users.remove({}).then(function(){
+  Promise.all([
+    users.insert({name: 'Joe'})
+    users.insert({name: 'Sue'}
+    users.insert({name: 'Tim'}
+    users.insert({name: 'Kim'}
+  ])
+.then(function(result){
     users.insert({name: 'Sue'}, function (err, result) {
       users.insert({name: 'Tim'}, function (err, result) {
         users.insert({name: 'Kim'}, function (err, result) {
