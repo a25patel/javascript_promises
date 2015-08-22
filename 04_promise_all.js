@@ -23,3 +23,9 @@ users.remove({}).then(function(){
     })
   })
 })
+
+
+
+
+//Change alll of this to promise.all. Need to finish all the challenges as well, then do
+// mongo assocations plus promises once more, then move on! 
