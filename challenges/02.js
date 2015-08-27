@@ -1,16 +1,18 @@
 var db = require('monk')('localhost/stocks-example')
-var Post = db.get('posts')
+var post = db.get('posts')
 var Comment = db.get('comments')
 
-
-Post.remove({}).then(function(){
-  Post.insert({newPost: 'Hello'})
-  return {newPost: newPost};
-}).then(function(obj){
-  console.log('success');
-  console.log(obj);
+post.remove({}).then(function(){
+  return post.insert({name: 'Joe'})
+}).then(function(result){
+  return post.insert({verse: 'hello'})
+}).then(function(result){
+  return post.find({})
+}).then(function(result){
+  console.log(result);
   db.close();
 })
+
 
 
 // delete all posts and
