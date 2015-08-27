@@ -4,40 +4,52 @@ var users = db.get('users')
 var promise = users.insert
 
 
+
 users.remove({}).then(function(){
   return Promise.all([
-    users.insert({name: 'Joe'}),
-    users.insert({name: 'Sue'}),
-    users.insert({name: 'Tim'}),
-    users.insert({name: 'Kim'})
+    users.insert({name:'Sue'}),
+    users.insert({name:'Tim'}),
+    users.insert({name:'Kim'}),
+    users.insert({name:'Joe'})
   ]).then(function(result){
     return users.find({})
   }).then(function(result){
-    console.log('\nSuccess! The records are: \n');
-    console.log(result);
-    db.close()
-  });
-
-});
-
-
+    console.log('\nSuccess! The recorsd are:\n');
+  })
+    users.insert({name: 'Sue'}, function (err, result) {
+      users.insert({name: 'Tim'}, function (err, result) {
+        users.insert({name: 'Kim'}, function (err, result) {
+          users.find({}, function (err, results) {
+            console.log("\nSuccess! The records are: \n");
+            console.log(results);
+            db.close()
+          })
+        })
+      })
+    })
+  })
+})
 
 
 // users.remove({}).then(function(){
-// .then(function(result){
-//     users.insert({name: 'Sue'}, function (err, result) {
-//       users.insert({name: 'Tim'}, function (err, result) {
-//         users.insert({name: 'Kim'}, function (err, result) {
-//           users.find({}, function (err, results) {
-//             console.log("\nSuccess! The records are: \n");
-//             console.log(results);
-//             db.close()
-//           })
-//         })
-//       })
-//     })
-//   })
-// })
+//   return Promise.all([
+//     users.insert({name: 'Joe'}),
+//     users.insert({name: 'Sue'}),
+//     users.insert({name: 'Tim'}),
+//     users.insert({name: 'Kim'})
+//   ]).then(function(result){
+//     return users.find({})
+//   }).then(function(result){
+//     console.log('\nSuccess! The records are: \n');
+//     console.log(result);
+//     db.close()
+//   });
+//
+// });
+
+
+
+
 
 
 
